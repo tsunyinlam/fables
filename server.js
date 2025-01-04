@@ -1,43 +1,44 @@
 const express = require('express');
 const OpenAI = require('openai');
 const cors = require('cors');
+const fs = require('fs');
+const { parse } = require('csv-parse/sync');
 require('dotenv').config();
 
-const app = express();
+// ... existing middleware setup ...
 
-// Middleware
-app.use(cors());
-app.use(express.json());
-app.use(express.static('public'));
-
-// Check for OPENAI_API_KEY
-
-console.log('Environment variables:', process.env);
-console.log('OPENAI_API_KEY exists:', !!process.env.OPENAI_API_KEY);
-
-// Initialize OpenAI
-const openaiApiKey = process.env.OPENAI_API_KEY;
-if (!openaiApiKey) {
-    console.error('Missing OPENAI_API_KEY environment variable');
+// Load CSV data
+let csvData;
+try {
+    const fileContent = fs.readFileSync('data/my-data.csv', 'utf-8');
+    csvData = parse(fileContent, {
+        columns: true,
+        skip_empty_lines: true
+    });
+    console.log(`Loaded ${csvData.length} rows from CSV`);
+} catch (error) {
+    console.error('Error loading CSV:', error);
     process.exit(1);
 }
 
-const openai = new OpenAI({
-    apiKey: openaiApiKey
-});
-
-// Routes
-app.get('/', (req, res) => {
-    res.sendFile(__dirname + '/public/index.html');
-});
+// ... OpenAI setup ...
 
 app.post('/api/ask', async (req, res) => {
     try {
         const { question } = req.body;
         
+        // Create a prompt that includes the CSV data context
+        const systemPrompt = `You are a helpful assistant with access to these fables:
+${JSON.stringify(csvData, null, 2)}
+
+The user's question is going to be a moral about a fable. Please recommend a fable that best fits the user's question. Reply with a list of 3 fables and mention their number.`;
+
         const completion = await openai.chat.completions.create({
             model: "gpt-3.5-turbo",
-            messages: [{ role: "user", content: question }],
+            messages: [
+                { role: "system", content: systemPrompt },
+                { role: "user", content: question }
+            ],
         });
 
         res.json({ answer: completion.choices[0].message.content });
@@ -47,8 +48,4 @@ app.post('/api/ask', async (req, res) => {
     }
 });
 
-// Important: Use Heroku's dynamic port
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
-});
+// ... rest of your server code ...
