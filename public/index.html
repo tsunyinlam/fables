@@ -34,6 +34,8 @@
             font-size: 16px;
             transition: border-color 0.3s ease;
             outline: none;
+            width: 100%;
+            box-sizing: border-box;
         }
 
         #question:focus {
@@ -128,17 +130,20 @@
         #chat-form {
             flex-direction: column;
             gap: 15px;
-        }
-
-        button {
             width: 100%;
-            padding: 12px;
         }
 
         #question {
             width: 100%;
             padding: 12px;
-            font-size: 16px; /* Prevents zoom on iOS */
+            font-size: 16px;
+            margin: 0;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            margin: 0;
         }
 
         .suggestion-pill {
@@ -196,7 +201,7 @@
 
         function displaySuggestions() {
             const suggestionsDiv = document.getElementById('suggestions');
-            const selectedMorals = getRandomMorals(4); // Show 4 random suggestions
+            const selectedMorals = getRandomMorals(3); // Show 4 random suggestions
             
             suggestionsDiv.innerHTML = selectedMorals
                 .map(moral => `<div class="suggestion-pill">${moral}</div>`)
