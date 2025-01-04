@@ -1,1 +1,1 @@
-web: start-command
+web: npm start
