@@ -2,7 +2,7 @@ const express = require('express');
 const OpenAI = require('openai');
 const cors = require('cors');
 const fs = require('fs');
-const { parse } = require('csv-parse/sync');
+const Papa = require('papaparse');
 require('dotenv').config();
 
 // ... existing middleware setup ...
@@ -11,10 +11,10 @@ require('dotenv').config();
 let csvData;
 try {
     const fileContent = fs.readFileSync('data/my-data.csv', 'utf-8');
-    csvData = parse(fileContent, {
-        columns: true,
-        skip_empty_lines: true
-    });
+    csvData = Papa.parse(fileContent, {
+        header: true,
+        skipEmptyLines: true
+    }).data;
     console.log(`Loaded ${csvData.length} rows from CSV`);
 } catch (error) {
     console.error('Error loading CSV:', error);
