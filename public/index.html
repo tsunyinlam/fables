@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>AI Chat</title>
+    <title>Recommend me an Aesop's Fable</title>
     <style>
         body {
             max-width: 800px;
@@ -89,6 +89,30 @@
             display: block;
             margin-top: 20px;
         }
+
+    .suggestions {
+        margin-top: 10px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+
+    .suggestion-pill {
+        background: #f0f7ff;
+        border: 1px solid #cce4ff;
+        color: #2c5282;
+        padding: 8px 16px;
+        border-radius: 20px;
+        font-size: 14px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+    }
+
+    .suggestion-pill:hover {
+        background: #e0efff;
+        transform: translateY(-1px);
+        box-shadow: 0 2px 4px rgba(44, 82, 130, 0.1);
+    }
     </style>
 </head>
 <body>
@@ -97,6 +121,56 @@
         <input type="text" id="question" placeholder="What moral are you looking for the fable to have?">
         <button type="submit">Ask</button>
     </form>
+
+    <div class="suggestions" id="suggestions"></div>
+    <script>
+        const morals = [
+            "Never give up in the face of adversity",
+            "Be careful who you trust",
+            "Kindness is more important than strength",
+            "Think before you act",
+            "Slow and steady wins the race",
+            "True friendship is valuable",
+            "Honesty is the best policy",
+            "Pride comes before a fall",
+            "Unity is strength",
+            "Appearances can be deceiving",
+            "Greed leads to downfall",
+            "Help others in need",
+            "Be grateful for what you have",
+            "Actions speak louder than words",
+            "Patience is a virtue"
+        ];
+
+        function getRandomMorals(count) {
+            const shuffled = morals.sort(() => 0.5 - Math.random());
+            return shuffled.slice(0, count);
+        }
+
+        function displaySuggestions() {
+            const suggestionsDiv = document.getElementById('suggestions');
+            const selectedMorals = getRandomMorals(4); // Show 4 random suggestions
+            
+            suggestionsDiv.innerHTML = selectedMorals
+                .map(moral => `<div class="suggestion-pill">${moral}</div>`)
+                .join('');
+            
+            // Add click handlers
+            document.querySelectorAll('.suggestion-pill').forEach(pill => {
+                pill.addEventListener('click', () => {
+                    document.getElementById('question').value = pill.textContent;
+                    document.getElementById('chat-form').dispatchEvent(new Event('submit'));
+                });
+            });
+        }
+
+        // Show initial suggestions
+        displaySuggestions();
+
+        // Refresh suggestions periodically (optional)
+        setInterval(displaySuggestions, 30000); // Refresh every 30 seconds
+    </script>
+
     <div id="response"></div>
 
     <script>
