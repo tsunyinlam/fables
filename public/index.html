@@ -6,24 +6,88 @@
         body {
             max-width: 800px;
             margin: 0 auto;
-            padding: 20px;
-            font-family: Arial, sans-serif;
+            padding: 40px 20px;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: #f9f9f9;
+            color: #333;
+            line-height: 1.6;
         }
+
+        h1 {
+            color: #2c3e50;
+            font-size: 2.5em;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
         #chat-form {
-            margin-bottom: 20px;
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
         }
+
         #question {
-            width: 80%;
-            padding: 10px;
+            flex: 1;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+            outline: none;
         }
+
+        #question:focus {
+            border-color: #3498db;
+            box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+        }
+
         button {
-            padding: 10px 20px;
+            padding: 15px 30px;
+            background: #3498db;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
         }
+
+        button:hover {
+            background: #2980b9;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(52, 152, 219, 0.2);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
         #response {
-            white-space: pre-wrap;
-            background: #f5f5f5;
-            padding: 20px;
-            border-radius: 5px;
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            line-height: 1.8;
+        }
+
+        #response a {
+            color: #3498db;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s ease;
+        }
+
+        #response a:hover {
+            color: #2980b9;
+            text-decoration: underline;
+        }
+
+        #response b {
+            color: #2c3e50;
+            font-size: 1.1em;
+            display: block;
+            margin-top: 20px;
         }
     </style>
 </head>
