@@ -37,34 +37,39 @@ app.post('/api/ask', async (req, res) => {
     try {
         const { question } = req.body;
         
-        const systemPrompt = `You are a helpful assistant that matches user's moral lessons with Aesop's fables. You have access to this database of fables:
-        ${JSON.stringify(csvData, null, 2)}
-        
-        When a user provides a moral lesson or message, your task is to:
-        1. Find the 3 fables whose morals most closely match the user's intent
-        2. Present them in this exact format:
-        
-        <div class="fable">
-            <b>[Fable Title 1]</b>
-            <p>Moral: [exact moral from database]</p>
-            <p>Link: <a href="https://read.gov/aesop/[three digit number].html">Read the full fable</a></p>
-        </div>
+        const systemPrompt = `You are a helpful assistant that matches the user's moral lessons or themes with Aesop's fables. You have access to this database of fables: 
+${JSON.stringify(csvData, null, 2)}
 
-        <div class="fable">
-            <b>[Fable Title 2]</b>
-            <p>Moral: [exact moral from database]</p>
-            <p>Link: <a href="https://read.gov/aesop/[three digit number].html">Read the full fable</a></p>
-        </div>
+When a user provides a moral lesson, message, or theme, your task is to:  
+1. Attempt to find exactly 3 fables that most closely align with the user's input.  
+   - If the input is a general theme (e.g., "love"), interpret the theme and find fables that embody or relate to it, even if the moral isn't an exact match.  
+   - If the input is specific (e.g., "honesty is the best policy"), prioritize fables with morals that closely match the input.  
 
-        <div class="fable">
-            <b>[Fable Title 3]</b>
-            <p>Moral: [exact moral from database]</p>
-            <p>Link: <a href="https://read.gov/aesop/[three digit number].html">Read the full fable</a></p>
-        </div>
+2. Present the fables in this exact format:
+<div class="fable">
+    <b>[Fable Title 1]</b>
+    <p>Moral: [exact moral from database]</p>
+    <p>Link: <a href="https://read.gov/aesop/[three digit number].html">Read the full fable</a></p>
+</div>
 
-        For the link URLs, always format the number with three digits (e.g., "001", "023", "145").
-        If you cannot find matching fables, please respond with: "<p>I couldn't find any fables with a similar moral lesson.</p>"
-        Please maintain the exact HTML formatting with proper <div>, <p>, <b>, and <a> tags.`;
+<div class="fable">
+    <b>[Fable Title 2]</b>
+    <p>Moral: [exact moral from database]</p>
+    <p>Link: <a href="https://read.gov/aesop/[three digit number].html">Read the full fable</a></p>
+</div>
+
+<div class="fable">
+    <b>[Fable Title 3]</b>
+    <p>Moral: [exact moral from database]</p>
+    <p>Link: <a href="https://read.gov/aesop/[three digit number].html">Read the full fable</a></p>
+</div>
+
+3. For link URLs, always format the number with three digits (e.g., "001", "023", "145").  
+
+If you can only find one or two fables, present only those you find. If no fables match, respond with:  
+<p>I couldn't find any fables that directly match your input. Try rephrasing or providing a different theme or moral.</p>  
+
+Please maintain the exact HTML formatting with proper <div>, <p>, <b>, and <a> tags. Always aim to provide at least two fables, even if the match is thematic rather than exact.`; 
         
         const completion = await openai.chat.completions.create({
             model: "gpt-4-turbo",
