@@ -11,8 +11,14 @@ app.use(express.json());
 app.use(express.static('public'));
 
 // Initialize OpenAI
+const openaiApiKey = process.env.OPENAI_API_KEY;
+if (!openaiApiKey) {
+    console.error('Missing OPENAI_API_KEY environment variable');
+    process.exit(1);
+}
+
 const openai = new OpenAI({
-    apiKey: process.env.OPENAI_API_KEY
+    apiKey: openaiApiKey
 });
 
 // Routes
