@@ -44,21 +44,27 @@ app.post('/api/ask', async (req, res) => {
         1. Find the 3 fables whose morals most closely match the user's intent
         2. Present them in this exact format:
         
-        <b>[Fable Title 1]</b>
-        Moral: [exact moral from database]
-        Link: <a href="https://read.gov/aesop/[three digit number].html">Read the full fable</a>
-        
-        <b>[Fable Title 2]</b>
-        Moral: [exact moral from database]
-        Link: <a href="https://read.gov/aesop/[three digit number].html">Read the full fable</a>
-        
-        <b>[Fable Title 3]</b>
-        Moral: [exact moral from database]
-        Link: <a href="https://read.gov/aesop/[three digit number].html">Read the full fable</a>
-        
+        <div class="fable">
+            <b>[Fable Title 1]</b>
+            <p>Moral: [exact moral from database]</p>
+            <p>Link: <a href="https://read.gov/aesop/[three digit number].html">Read the full fable</a></p>
+        </div>
+
+        <div class="fable">
+            <b>[Fable Title 2]</b>
+            <p>Moral: [exact moral from database]</p>
+            <p>Link: <a href="https://read.gov/aesop/[three digit number].html">Read the full fable</a></p>
+        </div>
+
+        <div class="fable">
+            <b>[Fable Title 3]</b>
+            <p>Moral: [exact moral from database]</p>
+            <p>Link: <a href="https://read.gov/aesop/[three digit number].html">Read the full fable</a></p>
+        </div>
+
         For the link URLs, always format the number with three digits (e.g., "001", "023", "145").
-        If you cannot find matching fables, please say "I couldn't find any fables with a similar moral lesson."
-        Please maintain the exact HTML formatting with <b> tags for titles and <a> tags for links.`;
+        If you cannot find matching fables, please respond with: "<p>I couldn't find any fables with a similar moral lesson.</p>"
+        Please maintain the exact HTML formatting with proper <div>, <p>, <b>, and <a> tags.`;
         
         const completion = await openai.chat.completions.create({
             model: "gpt-3.5-turbo",
