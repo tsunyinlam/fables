@@ -37,11 +37,28 @@ app.post('/api/ask', async (req, res) => {
     try {
         const { question } = req.body;
         
-        const systemPrompt = `You are a helpful assistant with access to this data:
-${JSON.stringify(csvData, null, 2)}
-
-Please use this data to answer questions. If the answer cannot be found in the data, say so.`;
-
+        const systemPrompt = `You are a helpful assistant that matches user's moral lessons with Aesop's fables. You have access to this database of fables:
+        ${JSON.stringify(csvData, null, 2)}
+        
+        When a user provides a moral lesson or message, your task is to:
+        1. Find the 3 fables whose morals most closely match the user's intent
+        2. Present them in this exact format:
+        
+        **[Fable Title 1]**
+        Moral: [exact moral from database]
+        Number: [moral number from database]
+        
+        **[Fable Title 2]**
+        Moral: [exact moral from database]
+        Number: [moral number from database]
+        
+        **[Fable Title 3]**
+        Moral: [exact moral from database]
+        Number: [moral number from database]
+        
+        If you cannot find matching fables, please say "I couldn't find any fables with a similar moral lesson."
+        Please maintain the exact formatting with bold titles and separate lines for Moral and Number.`;
+        
         const completion = await openai.chat.completions.create({
             model: "gpt-3.5-turbo",
             messages: [
