@@ -36,50 +36,47 @@ const openai = new OpenAI({
 app.post('/api/ask', async (req, res) => {
     try {
         const { question } = req.body;
+        console.log('Received question:', question);
         
-        const systemPrompt = `You are a helpful assistant that matches the user's moral lessons or themes with Aesop's fables. You have access to this database of fables: 
-${JSON.stringify(csvData, null, 2)}
+        // Set up SSE headers
+        res.writeHead(200, {
+            'Content-Type': 'text/event-stream',
+            'Cache-Control': 'no-cache',
+            'Connection': 'keep-alive'
+        });
+        console.log('Headers set up');
 
-When a user provides a moral lesson, message, or theme, your task is to:  
-1. Attempt to find exactly 3 fables that most closely align with the user's input.  
-   - If the input is a general theme (e.g., "love"), interpret the theme and find fables that embody or relate to it, even if the moral isn't an exact match.  
-   - If the input is specific (e.g., "honesty is the best policy"), prioritize fables with morals that closely match the input.  
-
-2. Present the fables in this exact format:
-<div class="fable">
-    <b>[Fable Title 1]</b>
-    <p>Moral: [exact moral from database]</p>
-    <p>Link: <a href="https://read.gov/aesop/[three digit number].html">Read the full fable</a></p>
-</div>
-
-<div class="fable">
-    <b>[Fable Title 2]</b>
-    <p>Moral: [exact moral from database]</p>
-    <p>Link: <a href="https://read.gov/aesop/[three digit number].html">Read the full fable</a></p>
-</div>
-
-<div class="fable">
-    <b>[Fable Title 3]</b>
-    <p>Moral: [exact moral from database]</p>
-    <p>Link: <a href="https://read.gov/aesop/[three digit number].html">Read the full fable</a></p>
-</div>
-
-3. For link URLs, always format the number with three digits (e.g., "001", "023", "145").  
-
-Please maintain the exact HTML formatting with proper <div>, <p>, <b>, and <a> tags. Always aim to provide at least two fables, even if the match is thematic rather than exact.`; 
-        
-        const completion = await openai.chat.completions.create({
-            model: "gpt-4-turbo",
+        console.log('Starting OpenAI stream...');
+        const stream = await openai.chat.completions.create({
+            model: "gpt-4-turbo-preview",
             messages: [
                 { role: "system", content: systemPrompt },
                 { role: "user", content: question }
             ],
+            stream: true
         });
+        console.log('Stream created');
 
-        res.json({ answer: completion.choices[0].message.content });
+        let fullResponse = '';
+        console.log('Starting stream processing...');
+        
+        for await (const chunk of stream) {
+            const content = chunk.choices[0]?.delta?.content || '';
+            if (content) {
+                console.log('Received chunk:', content);
+                fullResponse += content;
+                res.write(`data: ${JSON.stringify({ content })}\n\n`);
+            }
+        }
+
+        console.log('Stream completed');
+        res.write('data: [DONE]\n\n');
+        res.end();
+
     } catch (error) {
-        console.error('Error:', error);
-        res.status(500).json({ error: 'Something went wrong' });
+        console.error('Server Error:', error);
+        res.write(`data: ${JSON.stringify({ error: 'Something went wrong' })}\n\n`);
+        res.end();
     }
 });
 
