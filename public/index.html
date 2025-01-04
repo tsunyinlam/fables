@@ -236,8 +236,7 @@
             const question = document.getElementById('question').value;
             const responseDiv = document.getElementById('response');
             
-            responseDiv.innerHTML = '';
-            let fullResponse = '';
+            responseDiv.innerHTML = 'Loading...';
             
             try {
                 const response = await fetch('/api/ask', {
@@ -247,36 +246,9 @@
                     },
                     body: JSON.stringify({ question })
                 });
-
-                const reader = response.body.getReader();
-                const decoder = new TextDecoder();
-                let buffer = '';
-
-                while (true) {
-                    const { value, done } = await reader.read();
-                    if (done) break;
-                    
-                    buffer += decoder.decode(value, { stream: true });
-                    const lines = buffer.split('\n');
-                    buffer = lines.pop() || '';
-                    
-                    for (const line of lines) {
-                        if (line.startsWith('data: ')) {
-                            const data = line.slice(6);
-                            if (data === '[DONE]') continue;
-                            
-                            try {
-                                const { content } = JSON.parse(data);
-                                if (content) {
-                                    fullResponse += content;
-                                    responseDiv.innerHTML = fullResponse;
-                                }
-                            } catch (e) {
-                                console.error('Error parsing JSON:', e);
-                            }
-                        }
-                    }
-                }
+                
+                const data = await response.json();
+                responseDiv.innerHTML = data.answer;
             } catch (error) {
                 responseDiv.innerHTML = 'Error: Could not get response';
             }
