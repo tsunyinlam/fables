@@ -28,9 +28,9 @@
     </style>
 </head>
 <body>
-    <h1>Recommend an Aesop's Fable</h1>
+    <h1>Ask AI</h1>
     <form id="chat-form">
-        <input type="text" id="question" placeholder="Type your question here...">
+        <input type="text" id="question" placeholder="What moral are you looking for the fable to have?">
         <button type="submit">Ask</button>
     </form>
     <div id="response"></div>
@@ -41,7 +41,7 @@
             const question = document.getElementById('question').value;
             const responseDiv = document.getElementById('response');
             
-            responseDiv.textContent = 'Loading...';
+            responseDiv.innerHTML = 'Loading...';
             
             try {
                 const response = await fetch('/api/ask', {
@@ -53,9 +53,9 @@
                 });
                 
                 const data = await response.json();
-                responseDiv.textContent = data.answer;
+                responseDiv.innerHTML = data.answer;
             } catch (error) {
-                responseDiv.textContent = 'Error: Could not get response';
+                responseDiv.innerHTML = 'Error: Could not get response';
             }
         });
     </script>
