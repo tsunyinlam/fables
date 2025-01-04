@@ -91,10 +91,10 @@
         }
 
     .suggestions {
-        margin-top: 10px;
+        margin: 20px 0 40px 0;
         display: flex;
         flex-wrap: wrap;
-        gap: 8px;
+        gap: 10px;
     }
 
     .suggestion-pill {
@@ -112,6 +112,53 @@
         background: #e0efff;
         transform: translateY(-1px);
         box-shadow: 0 2px 4px rgba(44, 82, 130, 0.1);
+    }
+
+    /* Mobile Responsiveness */
+    @media (max-width: 768px) {
+        body {
+            padding: 20px 15px;
+        }
+
+        h1 {
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+
+        #chat-form {
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+        }
+
+        #question {
+            width: 100%;
+            padding: 12px;
+            font-size: 16px; /* Prevents zoom on iOS */
+        }
+
+        .suggestion-pill {
+            font-size: 13px;
+            padding: 8px 12px;
+        }
+
+        #response {
+            padding: 20px;
+            font-size: 15px;
+        }
+
+        .fable {
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+        }
+
+        .fable b {
+            font-size: 1.1em;
+        }
     }
     </style>
 </head>
