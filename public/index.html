@@ -175,28 +175,28 @@
 <body>
     <h1>Recommend me an Aesop's Fable</h1>
     <form id="chat-form">
-        <input type="text" id="question" placeholder="Find a fable by its moral...">
+        <input type="text" id="question" placeholder="What moral are you looking for the fable to have?">
         <button type="submit">Ask</button>
     </form>
 
     <div class="suggestions" id="suggestions"></div>
     <script>
         const morals = [
-            "Never give up in the face of adversity",
-            "Be careful who you trust",
-            "Kindness is more important than strength",
-            "Think before you act",
-            "Slow and steady wins the race",
-            "True friendship is valuable",
-            "Honesty is the best policy",
-            "Pride comes before a fall",
-            "Unity is strength",
+            "Kindness is never wasted",
             "Appearances can be deceiving",
+            "Unity is strength",
+            "Honesty is the best policy",
+            "Pride goes before a fall",
+            "The race is not always to the swift",
+            "Think before you act",
+            "Flattery serves its own ends",
+            "Do not trust false promises",
             "Greed leads to downfall",
-            "Help others in need",
-            "Be grateful for what you have",
+            "Better to bend than break",
+            "Do not count your chickens",
             "Actions speak louder than words",
-            "Patience is a virtue"
+            "Might does not make right",
+            "Beware of those who flatter"
         ];
 
         function getRandomMorals(count) {

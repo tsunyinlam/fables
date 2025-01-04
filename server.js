@@ -67,7 +67,7 @@ app.post('/api/ask', async (req, res) => {
         Please maintain the exact HTML formatting with proper <div>, <p>, <b>, and <a> tags.`;
         
         const completion = await openai.chat.completions.create({
-            model: "gpt-3.5-turbo",
+            model: "gpt-4o-mini",
             messages: [
                 { role: "system", content: systemPrompt },
                 { role: "user", content: question }
