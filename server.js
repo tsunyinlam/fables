@@ -5,7 +5,14 @@ const fs = require('fs');
 const Papa = require('papaparse');
 require('dotenv').config();
 
-// ... existing middleware setup ...
+// Initialize Express
+const app = express();
+const port = process.env.PORT || 3000;
+
+// Middleware
+app.use(cors());
+app.use(express.json());
+app.use(express.static('public'));
 
 // Load CSV data
 let csvData;
@@ -21,17 +28,19 @@ try {
     process.exit(1);
 }
 
-// ... OpenAI setup ...
+// Initialize OpenAI
+const openai = new OpenAI({
+    apiKey: process.env.OPENAI_API_KEY
+});
 
 app.post('/api/ask', async (req, res) => {
     try {
         const { question } = req.body;
         
-        // Create a prompt that includes the CSV data context
-        const systemPrompt = `You are a helpful assistant with access to these fables:
+        const systemPrompt = `You are a helpful assistant with access to this data:
 ${JSON.stringify(csvData, null, 2)}
 
-The user's question is going to be a moral about a fable. Please recommend a fable that best fits the user's question. Reply with a list of 3 fables and mention their number.`;
+Please use this data to answer questions. If the answer cannot be found in the data, say so.`;
 
         const completion = await openai.chat.completions.create({
             model: "gpt-3.5-turbo",
@@ -48,4 +57,7 @@ The user's question is going to be a moral about a fable. Please recommend a fab
     }
 });
 
-// ... rest of your server code ...
+// Start server
+app.listen(port, () => {
+    console.log(`Server running on port ${port}`);
+});
