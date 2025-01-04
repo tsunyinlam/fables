@@ -66,9 +66,6 @@ When a user provides a moral lesson, message, or theme, your task is to:
 
 3. For link URLs, always format the number with three digits (e.g., "001", "023", "145").  
 
-If you can only find one or two fables, present only those you find. If no fables match, respond with:  
-<p>I couldn't find any fables that directly match your input. Try rephrasing or providing a different theme or moral.</p>  
-
 Please maintain the exact HTML formatting with proper <div>, <p>, <b>, and <a> tags. Always aim to provide at least two fables, even if the match is thematic rather than exact.`; 
         
         const completion = await openai.chat.completions.create({
