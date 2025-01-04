@@ -10,6 +10,11 @@ app.use(cors());
 app.use(express.json());
 app.use(express.static('public'));
 
+// Check for OPENAI_API_KEY
+
+console.log('Environment variables:', process.env);
+console.log('OPENAI_API_KEY exists:', !!process.env.OPENAI_API_KEY);
+
 // Initialize OpenAI
 const openaiApiKey = process.env.OPENAI_API_KEY;
 if (!openaiApiKey) {
