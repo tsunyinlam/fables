@@ -49,22 +49,20 @@ When a user provides a moral lesson, message, or theme, your task is to:
 <div class="fable">
     <b>[Fable Title 1]</b>
     <p>Moral: [exact moral from database]</p>
-    <p>Link: <a href="https://read.gov/aesop/[three digit number].html">Read the full fable</a></p>
+    <p>Link: <a href="/[three digit number].html">Read the full fable</a></p>
 </div>
 
 <div class="fable">
     <b>[Fable Title 2]</b>
     <p>Moral: [exact moral from database]</p>
-    <p>Link: <a href="https://read.gov/aesop/[three digit number].html">Read the full fable</a></p>
+    <p>Link: <a href="/[three digit number].html">Read the full fable</a></p>
 </div>
 
 <div class="fable">
     <b>[Fable Title 3]</b>
     <p>Moral: [exact moral from database]</p>
-    <p>Link: <a href="https://read.gov/aesop/[three digit number].html">Read the full fable</a></p>
+    <p>Link: <a href="/[three digit number].html">Read the full fable</a></p>
 </div>
-
-3. For link URLs, always format the number with three digits (e.g., "001", "023", "145").  
 
 Please maintain the exact HTML formatting with proper <div>, <p>, <b>, and <a> tags. Always aim to provide at least two fables, even if the match is thematic rather than exact.`; 
         
