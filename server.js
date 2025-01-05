@@ -69,7 +69,7 @@ When a user provides a moral lesson, message, or theme, your task is to:
 Please maintain the exact HTML formatting with proper <div>, <p>, <b>, and <a> tags. Always aim to provide at least two fables, even if the match is thematic rather than exact.`; 
         
         const completion = await openai.chat.completions.create({
-            model: "gpt-4-turbo",
+            model: "gpt-4o-mini",
             messages: [
                 { role: "system", content: systemPrompt },
                 { role: "user", content: question }
