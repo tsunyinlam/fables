@@ -38,7 +38,8 @@ Built with Node.js and OpenAI's GPT-4. Almost all code generated from Cursor.
 ### API Endpoint in server.js
 
 POST /api/ask
-Accepts a question/theme and returns matching fables.
+
+Accepts a moral/theme and returns matching fables.
 
 Request body:
 ```
