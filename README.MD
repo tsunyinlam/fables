@@ -39,8 +39,9 @@ Built with Node.js and OpenAI's GPT-4. Almost all code generated from Cursor.
 
 POST /api/ask
 Accepts a question/theme and returns matching fables.
-```
+
 Request body:
+```
 {
     "question": "string containing the user's intended moral or theme"
 }
