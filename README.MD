@@ -16,6 +16,7 @@ Built with Node.js and OpenAI's GPT-4. Almost all code generated from Cursor.
 
 ### Project Structure 
 
+```
 ├── public/
 │   ├── index.html      # Frontend interface
 │   └── 1. html         # Redirects URLS to Aesop's fables
@@ -32,6 +33,7 @@ Built with Node.js and OpenAI's GPT-4. Almost all code generated from Cursor.
 ├── package.json        # Node.js project dependencies
 ├── package-lock.json   
 └── Procfile            # Heroku deployment instructions
+```
 
 ### API Endpoint in server.js
 
