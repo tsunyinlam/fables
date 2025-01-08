@@ -12,7 +12,7 @@ Built with Node.js and OpenAI's GPT-4. Almost all code generated from Cursor.
 - **Backend**: Node.js with Express.js
 - **AI Integration**: OpenAI GPT-4 API
 - **Data Management**: CSV-based data store
-- **Deployment**: Heroku Cloud Platform
+- **Deployment**: Heroku
 
 ### Project Structure 
 
