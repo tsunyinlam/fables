@@ -26,7 +26,7 @@ Built with Node.js and OpenAI's GPT-4. Almost all code generated from Cursor.
 │   └── grimms/          # Additional unused stories database
 |   └── make_aesop_redirect_urls.py  # Python script for generating redirect URLs to Aesop's fables
 ├── server.js           # Express server and API endpoints
-├── .env                # Environment variables
+├── cheatsheet.md       # Build commands
 ├── README.md           # Documentation
 ├── .gitignore          
 ├── package.json        # Node.js project dependencies
