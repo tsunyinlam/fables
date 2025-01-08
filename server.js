@@ -17,7 +17,7 @@ app.use(express.static('public'));
 // Load CSV data
 let csvData;
 try {
-    const fileContent = fs.readFileSync('data/my-data.csv', 'utf-8');
+    const fileContent = fs.readFileSync('data/aesop-morals.csv', 'utf-8');
     csvData = Papa.parse(fileContent, {
         header: true,
         skipEmptyLines: true

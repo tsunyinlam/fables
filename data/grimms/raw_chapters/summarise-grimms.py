@@ -13,7 +13,7 @@ openai.api_key = os.getenv('OPENAI_API_KEY')
 def get_moral_from_gpt(story_text):
     try:
         response = openai.chat.completions.create(
-            model="gpt-4-turbo-preview",
+            model="gpt-4o-mini",
             messages = [
                 {
                     "role": "system",
@@ -42,24 +42,22 @@ def get_moral_from_gpt(story_text):
         return "Error generating moral"
 
 def extract_story_content(html_content):
-    soup = BeautifulSoup(html_content, 'html.parser')
-    
-    # Get story text (all p tags within the chapter div)
-    chapter_div = soup.find('div', class_='chapter')
-    if not chapter_div:
-        return ""
-    
-    paragraphs = chapter_div.find_all('p')
-    story_text = ' '.join(p.text.strip() for p in paragraphs)
-    
-    return story_text
+    return html_content
 
 def create_morals_csv():
     output_rows = []
     directory = 'data/grimms/raw_chapters'
     
+def create_morals_csv():
+    output_rows = []
+    directory = 'data/grimms/raw_chapters'
+    processed_count = 0  # Add counter
+    
     for filename in os.listdir(directory):
         if filename.endswith('.html'):
+            if processed_count >= 5:  # Check if we've processed 5 files
+                break
+            
             print(f"Processing {filename}...")
             with open(os.path.join(directory, filename), 'r', encoding='utf-8') as file:
                 content = file.read()
@@ -70,6 +68,7 @@ def create_morals_csv():
                     output_filename = f"raw_{os.path.splitext(filename)[0]}.html"
                     output_rows.append([output_filename, moral])
                     print(f"Generated moral for {filename}")
+                    processed_count += 1  # Increment counter
     
     # Write to CSV
     with open('grimm_morals.csv', 'w', newline='', encoding='utf-8') as file:
