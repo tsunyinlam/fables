@@ -89,6 +89,6 @@ def split_chapters(input_file, output_dir):
         print(f"Created {output_file} and {raw_output_file}")
 
 if __name__ == "__main__":
-    input_file = "data/grimms/gutenberg.html"
+    input_file = "data/grimms/grimms-source-file.html"
     output_dir = "data/grimms/chapters"
     split_chapters(input_file, output_dir)
